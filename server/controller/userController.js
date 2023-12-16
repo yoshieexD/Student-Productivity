@@ -60,7 +60,7 @@ exports.loginAccount = async (req, res) => {
         }
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (passwordMatch) {
-            return res.status(200).json({ message: 'Login success' });
+            return res.status(200).json({ success: true, message: 'Login success', userId: user._id });
         } else {
             return res.status(401).json({ message: 'Invalid Credentials' });
         }

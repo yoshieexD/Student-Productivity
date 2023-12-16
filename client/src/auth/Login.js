@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { useNavigate, Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const api = process.env.REACT_APP_API_URL;
 const Login = () => {
     const navigate = useNavigate();
@@ -15,9 +16,10 @@ const Login = () => {
         },
         {
             onSuccess: (data) => {
+                Cookies.set('id', data.userId, { expires: 7 });
                 toast.success('Successfully Login', data);
                 setTimeout(() => {
-                    navigate('/dashboard');
+                    navigate('/auth/todo');
                 }, 500);
             },
             onError: (error) => {
@@ -55,7 +57,7 @@ const Login = () => {
                 <div className='flex justify-end'>
                     <Link to="/forgot-password" className='text-sm text-gray-400 underline '>Forgot Password?</Link>
                 </div>
-                <button type="submit" disabled={mutation.isLoading} className='bg-neutral-950 w-full text-white text-lg py-2 rounded-md'>
+                <button type="submit" disabled={mutation.isLoading} className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full'>
                     {mutation.isLoading ? 'Signing in...' : 'Sign In'}
                 </button>
                 <div className='text-sm text-gray-400'>Don't have any account? <Link to="/register" className='text-blue-500'>Sign Up</Link></div>
