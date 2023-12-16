@@ -60,7 +60,6 @@ const Login = () => {
                 </button>
                 <div className='text-sm text-gray-400'>Don't have any account? <Link to="/register" className='text-blue-500'>Sign Up</Link></div>
             </form >
-
         </div >
     );
 };
