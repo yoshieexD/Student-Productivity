@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
+import ForgotPass from '../auth/ForgotPass';
 import { useLocation } from 'react-router-dom';
 const Home = () => {
     const location = useLocation();
@@ -12,6 +13,7 @@ const Home = () => {
                 </div>
                 {location.pathname === "/register" && (<Register />)}
                 {location.pathname === "/" && (<Login />)}
+                {location.pathname === "/forgot-password" && (<ForgotPass />)}
             </div>
         </div>
     );

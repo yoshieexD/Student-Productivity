@@ -53,7 +53,7 @@ const Login = () => {
                     <input type="password" name="password" value={data.password} onChange={handleChange} className="w-full pl-10 appearance-none focus:outline-none" placeholder='Enter Password' />
                 </div>
                 <div className='flex justify-end'>
-                    <Link to="/" className='text-sm text-gray-400 underline '>Forgot Password?</Link>
+                    <Link to="/forgot-password" className='text-sm text-gray-400 underline '>Forgot Password?</Link>
                 </div>
                 <button type="submit" disabled={mutation.isLoading} className='bg-neutral-950 w-full text-white text-lg py-2 rounded-md'>
                     {mutation.isLoading ? 'Signing in...' : 'Sign In'}

@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require('dotenv');
-
+const morgan = require('morgan');
 
 //routes 
 const userRoute = require('./routes/userRoutes.js');
@@ -19,7 +19,10 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+app.use(morgan('dev'));
 
+
+app.use('/user', userRoute);
 //ports
 const port = process.env.PORT;
 
@@ -30,5 +33,3 @@ app.get('/', function (req, res) {
 app.listen(port, () => {
     console.log(`Server is running in ${process.env.NODE_ENV} port:${port}`);
 })
-
-app.use('/user', userRoute);
