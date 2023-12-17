@@ -162,3 +162,16 @@ exports.changePass = async (req, res) => {
         console.error(error);
     }
 }
+
+exports.getUser = async (req, res) => {
+    try {
+        const user = await userModel.findOne({ _id: req.params.id });
+        if (!user) {
+            return res.status(404).json({ error: 'This user does not exist' });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
