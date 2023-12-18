@@ -6,7 +6,7 @@ const id = Cookies.get('id');
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const { isLoading, error, data } = Get(`${api}/user/get-user/${id}`)
+    const { isLoading, error, data } = id ? Get(`${api}/user/get-user/${id}`) : {}
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;

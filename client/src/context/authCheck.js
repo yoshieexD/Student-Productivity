@@ -10,8 +10,7 @@ const useAuthCheck = () => {
             const id = Cookies.get('id');
             if (id) {
                 try {
-                    const response = await axios.post(`${api}/user/auth-check/${id}`);
-                    console.log(response);
+                    await axios.post(`${api}/user/auth-check/${id}`);
                 } catch (error) {
                     console.error('Error checking authentication:', error);
                     navigate('/');

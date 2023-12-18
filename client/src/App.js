@@ -14,6 +14,8 @@ import Pomorodo from './page/Pomorodo.js';
 import Notes from './page/Notes.js';
 import FriendList from './page/FriendList.js';
 import Leaderboard from './page/Leaderboard.js';
+import Profile from './auth/Profile.js';
+import LinkSaver from './page/LinkSaver.js';
 const ProtectedRoute = () => {
   useAuthCheck();
   return (
@@ -36,7 +38,9 @@ const App = () => {
           <Route path='pomorodo' element={< Pomorodo />} />
           <Route path='notes' element={<Notes />} />
           <Route path='friend/list' element={<FriendList />} />
+          <Route path='link' element={<LinkSaver />} />
           <Route path='leaderboard' element={<Leaderboard />} />
+          <Route path='profile' element={<Profile />} />
         </Route>
 
       </Routes>

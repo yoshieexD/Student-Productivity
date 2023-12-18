@@ -3,11 +3,10 @@ import { FaUser, FaLock } from "react-icons/fa";
 import axios from 'axios';
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 const api = process.env.REACT_APP_API_URL;
 const Login = () => {
-    const navigate = useNavigate();
     const [data, setData] = useState({ userName: '', password: '' });
     const mutation = useMutation(
         async () => {
@@ -19,7 +18,7 @@ const Login = () => {
                 Cookies.set('id', data.userId, { expires: 7 });
                 toast.success('Successfully Login', data);
                 setTimeout(() => {
-                    navigate('/auth/todo');
+                    window.location.href = '/auth/todo';
                 }, 500);
             },
             onError: (error) => {
