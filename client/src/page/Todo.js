@@ -14,9 +14,9 @@ const Todo = () => {
                 <h1 className="text-2xl font-semibold mb-4 text-green-600">Todo Board</h1>
                 <div className='flex justify-around '>
                     <TodoContainer>
-                        <div className='flex justify-between w-full w-[92%] font-semibold my-2'>
+                        <div className='flex justify-between w-full w-[87%] font-semibold my-2'>
                             To do
-                            <FaEllipsisH className='text-gray-400 text-xs' />
+                            <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />
                         </div>
                         <TodoCard>
                             test
@@ -26,7 +26,7 @@ const Todo = () => {
                         </div>
                     </TodoContainer>
                     <TodoContainer>
-                        <div className='flex justify-between w-full w-[92%] w-full  font-semibold my-2'>
+                        <div className='flex justify-between w-full w-[87%] w-full  font-semibold my-2'>
                             Doing
                             <FaEllipsisH className='text-gray-400 text-xs' />
                         </div>
@@ -38,14 +38,14 @@ const Todo = () => {
                         </div>
                     </TodoContainer>
                     <TodoContainer>
-                        <div className='flex justify-between w-full w-[92%] w-full  font-semibold my-2'>
+                        <div className='flex justify-between w-full w-[87%] w-full  font-semibold my-2'>
                             Done
-                            <FaEllipsisH className='text-gray-400 text-xs' />
+                            <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />
                         </div>
                         <TodoCard>
                             test
                         </TodoCard>
-                        <div className='flex justify-start w-full ml-5'>
+                        <div className='flex justify-start w-full ml-5 cursor-pointer'>
                             <AddCard>Add a card...</AddCard>
                         </div>
                     </TodoContainer>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Layout from '../Layout/Layout';
-import BoardContainer from '../leaderboard/BoardContainer';
 const Leaderboard = () => {
     return (
         <Layout>
@@ -8,8 +7,6 @@ const Leaderboard = () => {
             <div className='w-full'>
             </div>
             <div className='flex w-full justify-center'>
-                <BoardContainer >
-                </BoardContainer>
             </div>
         </Layout>
     );
