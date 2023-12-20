@@ -3,6 +3,7 @@ import Layout from '../Layout/Layout';
 import Container from '../shared/Container';
 import { FaCaretRight, FaCog } from "react-icons/fa";
 import { GiLaurelsTrophy } from "react-icons/gi";
+import PomorodoContainer from '../pomorodo/PomorodoContainer';
 
 
 const Pomorodo = () => {
@@ -61,6 +62,18 @@ const Pomorodo = () => {
                             Note: The trophy will be given after you complete all rounds.
                         </div>
                     </Container>
+                </div>
+                <br />
+                <div className='w-4/5 flex flex-col space-x-5 space-y-2  '>
+                    <div className='ml-4 italic font-semibold'>History</div>
+                    <div className='w-full'>
+                        <div className='flex justify-around mb-2 '>
+                            <div className='text-gray-500 text-sm font-medium'>Date</div>
+                            <div className='text-gray-500 text-sm font-medium'>Minutes</div>
+                            <div className='text-gray-500 text-sm font-medium'>Points</div>
+                        </div>
+                    </div>
+                    <PomorodoContainer date={"2023-01-3"} Minutes={"160minutes"} Points={"14"} className={"w-full"} />
                 </div>
             </div>
         </Layout>

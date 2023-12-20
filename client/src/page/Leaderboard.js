@@ -29,6 +29,7 @@ const Leaderboard = () => {
                 </div>
                 <div className='w-5/6'>
                     <BoardContainer Name={"test"} Points={"300"} className={"bg-yellow-500"} />
+                    <BoardContainer Name={"asdsd"} Points={"200"} className={"bg-blue-500"} />
                     <BoardContainer Name={"Alvin"} Points={"100"} />
 
                 </div>
