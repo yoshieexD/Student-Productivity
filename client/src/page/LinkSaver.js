@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../Layout/Layout';
-import { FaCopy, FaTrash } from 'react-icons/fa';
+import { FaCopy, FaTimes } from 'react-icons/fa';
 import LinkContainer from '../Link/LinkContainer';
 import LinkModal from '../Link/LinkModal';
 
@@ -25,13 +25,13 @@ const LinkSaver = () => {
                         <div className='text-gray-500 text-sm font-medium'>Description</div>
                         <div className='text-gray-500 text-sm font-medium'>Action</div>
                     </div>
-                    <LinkContainer className='flex justify-around mb-2 pt-2'>
-                        <div className=' text-sm font-light'>Test</div>
-                        <div className=' text-sm font-light'>English</div>
-                        <div className=' text-sm font-light'>Test</div>
-                        <div className='flex space-x-2'>
+                    <LinkContainer className='flex  mb-2 pt-2'>
+                        <div className='flex justify-center  text-sm font-light w-1/4 '>Test</div>
+                        <div className='flex justify-center  text-sm font-light w-1/4 '>English</div>
+                        <div className=' flex justify-center text-sm font-light w-1/4 '>Test</div>
+                        <div className='flex justify-center  space-x-2 w-1/4 '>
                             <div><FaCopy className='text-gray-600 cursor-pointer' /></div>
-                            <div><FaTrash className='text-red-600 cursor-pointer' onClick={() => setModal(prevModal => ({ ...prevModal, delete: true }))} /></div>
+                            <div className='bg-red-500 p-1 rounded-full'><FaTimes className='text-white cursor-pointer text-xs' onClick={() => setModal(prevModal => ({ ...prevModal, delete: true }))} /></div>
                         </div>
                     </LinkContainer>
                 </div>
