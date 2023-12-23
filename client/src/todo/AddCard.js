@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AddCard = ({ children }) => {
+const AddCard = ({ children, onclick }) => {
     return (
-        <div className='text-xs text-gray-500 font-light mt-2 mb-2'>
+        <div className='text-xs text-gray-500 font-light cursor-pointer' onClick={onclick}>
             {children}
         </div>
     );

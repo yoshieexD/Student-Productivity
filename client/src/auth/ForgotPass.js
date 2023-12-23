@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import SubmitBtn from '../shared/button/SubmitBtn';
 const api = process.env.REACT_APP_API_URL;
 const ForgotPass = () => {
     const navigate = useNavigate();
@@ -83,9 +84,9 @@ const ForgotPass = () => {
                             </span>
                             <input type="password" name="password" value={data.password} onChange={handleChange} className="w-full pl-10 appearance-none focus:outline-none" placeholder='Enter Password' />
                         </div>
-                        <button type="submit" disabled={mutation.isLoading} className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full'>
+                        <SubmitBtn type={"submit"} disabled={mutation.isLoading} className={'w-full'}>
                             {mutation.isLoading ? 'Changing...' : 'Change Password'}
-                        </button>
+                        </SubmitBtn>
                     </form>
                 )
             }

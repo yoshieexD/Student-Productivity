@@ -4,8 +4,6 @@ import Container from '../shared/Container';
 import { FaCaretRight, FaCog } from "react-icons/fa";
 import { GiLaurelsTrophy } from "react-icons/gi";
 import PomorodoContainer from '../pomorodo/PomorodoContainer';
-
-
 const Pomorodo = () => {
     const [start, setStart] = useState(false);
     const handleStart = () => {
@@ -15,6 +13,7 @@ const Pomorodo = () => {
             setStart(false)
         }
     }
+
     return (
         <Layout>
             <h1 className='text-2xl font-semibold mb-4 text-red-600'>Pomorodo</h1>

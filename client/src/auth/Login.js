@@ -5,6 +5,7 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import SubmitBtn from '../shared/button/SubmitBtn';
 const api = process.env.REACT_APP_API_URL;
 const Login = () => {
     const [data, setData] = useState({ userName: '', password: '' });
@@ -56,9 +57,9 @@ const Login = () => {
                 <div className='flex justify-end'>
                     <Link to="/forgot-password" className='text-sm text-gray-400 underline '>Forgot Password?</Link>
                 </div>
-                <button type="submit" disabled={mutation.isLoading} className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full'>
+                <SubmitBtn type={"submit"} disabled={mutation.isLoading} className={"w-full"}>
                     {mutation.isLoading ? 'Signing in...' : 'Sign In'}
-                </button>
+                </SubmitBtn>
                 <div className='text-sm text-gray-400'>Don't have any account? <Link to="/register" className='text-blue-500'>Sign Up</Link></div>
             </form >
         </div >

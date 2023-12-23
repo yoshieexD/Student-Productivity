@@ -2,6 +2,7 @@ const todoModel = require('../model/todoModel');
 
 exports.createTodo = async (req, res) => {
     try {
+        console.log(req.body);
         const newTodo = await new todoModel(req.body).save();
         res.json(newTodo);
     } catch (error) {
@@ -30,5 +31,17 @@ exports.updateTodo = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
 
+    }
+}
+
+exports.getTodo = async (req, res) => {
+    try {
+        const getTodo = await todoModel.find({});
+        if (!getTodo) {
+            return res.status(404).json({ error: 'Todo not found' });
+        }
+        res.json(getTodo);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }

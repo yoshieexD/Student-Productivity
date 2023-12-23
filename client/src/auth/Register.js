@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import SubmitBtn from '../shared/button/SubmitBtn';
 const api = process.env.REACT_APP_API_URL;
 const Register = () => {
     const navigate = useNavigate();
@@ -53,9 +54,9 @@ const Register = () => {
                     </span>
                     <input type="text" name="userName" value={data.userName} onChange={handleChange} className="w-full pl-10 appearance-none focus:outline-none" placeholder='Enter Username' />
                 </div>
-                <button type="submit" disabled={mutation.isLoading} className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full'>
+                <SubmitBtn type={"submit"} disabled={mutation.isLoading} className={"w-full"}>
                     {mutation.isLoading ? 'Sending...' : 'Send'}
-                </button>
+                </SubmitBtn>
             </form >
 
         </div >

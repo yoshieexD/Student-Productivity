@@ -8,6 +8,7 @@ const morgan = require('morgan');
 //routes 
 const userRoute = require('./routes/userRoutes.js');
 const todoRoute = require('./routes/todoRoutes.js');
+const linkRoute = require('./routes/LinkRoutes.js');
 //dotenv config
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(morgan('dev'));
 
 app.use('/user', userRoute);
 app.use('/todo', todoRoute);
+app.use('/link', linkRoute);
 //ports
 const port = process.env.PORT;
 
