@@ -23,7 +23,7 @@ exports.deleteTodo = async (req, res) => {
 
 exports.updateTodo = async (req, res) => {
     try {
-        const updateTodo = await todoModel.findByIdAndUpdate(req.params.id, req.body);
+        const updateTodo = await todoModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updateTodo) {
             return res.status(404).json({ error: 'Todo not found' });
         }

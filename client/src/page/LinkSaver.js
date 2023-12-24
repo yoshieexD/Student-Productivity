@@ -66,7 +66,7 @@ const LinkSaver = () => {
         });
 
     const handleDelete = async () => {
-        if (confirm.delete.trim() === "I want to delete this link") {
+        if (confirm.delete.trim() === 'Confirm, I want to delete') {
             try {
                 await deletePostMutation.mutate(id);
                 setModal((prevModal) => ({ ...prevModal, delete: false }));
@@ -115,7 +115,7 @@ const LinkSaver = () => {
                     {
                         <>
                             <div className=' flex justify-center items-center'>
-                                {getData?.filter(item => item.userId === user.id).length === 0 && <p className='text-gray-400 font-semibold italic text-lg'>No links available.</p>}
+                                {getData?.filter(item => item.userId === user._id).length === 0 && <p className='text-gray-400 font-semibold italic text-lg'>No links available.</p>}
                             </div>
                             {getData?.filter(item => item.userId === user._id).map((e) => {
                                 return (
@@ -164,9 +164,9 @@ const LinkSaver = () => {
                 </form>
             </Modals>
             <Modals title={"Confirm Delete"} isOpen={modal.delete} onClose={() => { setModal((prevModal) => ({ ...prevModal, delete: false })); setConfirm((prev) => ({ ...prev, delete: '' })) }}>
-                <p>Please type <b>"I want to delete this link"</b></p>
+                <p>Please type <b>'Confirm, I want to delete'</b></p>
                 <Input
-                    placeholder={"Type 'I want to delete this link'"}
+                    placeholder={"Type 'Confirm, I want to delete'"}
                     value={confirm.delete}
                     onChange={(e) => setConfirm((prevConfirm) => ({ ...prevConfirm, delete: e.target.value }))}
                 />
