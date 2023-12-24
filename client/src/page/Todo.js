@@ -20,6 +20,7 @@ const Todo = () => {
     const [right, setRight] = useState({
         update: false,
         delete: false,
+        view: false,
     })
     const [data, setData] = useState({
         title: '',
@@ -135,9 +136,10 @@ const Todo = () => {
 
     const handleContextMenu = (event, e) => {
         event.preventDefault();
-        if (right.update && right.delete === true) {
+        if (right.update && right.delete && right.view === true) {
             setRight(
                 {
+                    view: false,
                     update: false,
                     delete: false,
                 }
@@ -158,7 +160,7 @@ const Todo = () => {
         <Layout>
             <div>
                 <h1 className="text-2xl font-semibold  text-green-600">Todo Board</h1>
-                <p className='italic text-xs mb-4 text-gray-700'>Note: If you want to update or delete, simply right-click.</p>
+                <p className='italic text-base mb-4 text-gray-700'>Note: If you want to view, update, or delete, simply hover and right-click.</p>
                 <div className='flex justify-around '>
                     <div className='flex flex-col w-3/12'>
                         {getData?.filter(item => item.type === "Todo" && item.userId === user._id).map((e, index, array) => (
@@ -242,7 +244,7 @@ const Todo = () => {
             </div>
             <Modals title={'Add Todo'} isOpen={Modal.todo} onClose={() => setModal((prevModal) => ({ ...prevModal, todo: false }))}>
                 <form onSubmit={(event) => handlePost(event, 'Todo')}>
-                    <Input type={"text"} name={"title"} placeholder={"Title"} value={data.title} onChange={handleChange} />
+                    <Input type={"text"} name={"title"} placeholder={"Title"} value={data.title} onChange={handleChange} required />
                     <br />
                     <Input type={"date"} name={"end_date"} placeholder={"End Date"} value={data.end_date} onChange={handleChange} />
                     <br />
@@ -254,7 +256,7 @@ const Todo = () => {
             </Modals>
             <Modals title={'Add Doing'} isOpen={Modal.doing} onClose={() => setModal((prevModal) => ({ ...prevModal, doing: false }))}>
                 <form onSubmit={(event) => handlePost(event, 'Doing')}>
-                    <Input type={"text"} name={"title"} placeholder={"Title"} value={data.title} onChange={handleChange} />
+                    <Input type={"text"} name={"title"} placeholder={"Title"} value={data.title} onChange={handleChange} required />
                     <br />
                     <Input type={"date"} name={"end_date"} placeholder={"End Date"} value={data.end_date} onChange={handleChange} />
                     <br />
@@ -266,7 +268,7 @@ const Todo = () => {
             </Modals>
             <Modals title={'Add Done'} isOpen={Modal.done} onClose={() => setModal((prevModal) => ({ ...prevModal, done: false }))}>
                 <form onSubmit={(event) => handlePost(event, 'Done')}>
-                    <Input type={"text"} name={"title"} placeholder={"Title"} value={data.title} onChange={handleChange} />
+                    <Input type={"text"} name={"title"} placeholder={"Title"} value={data.title} onChange={handleChange} required />
                     <br />
                     <Input type={"date"} name={"end_date"} placeholder={"End Date"} value={data.end_date} onChange={handleChange} />
                     <br />
@@ -287,7 +289,7 @@ const Todo = () => {
             </Modals>
             <Modals title={'Update'} isOpen={Modal.update} onClose={() => setModal((prev) => ({ ...prev, update: false }))} >
                 <form onSubmit={handleUpdate}>
-                    <Input type={"text"} name={"title"} placeholder={"Title"} value={soloData?.title} onChange={handleUpdateChange} />
+                    <Input type={"text"} name={"title"} placeholder={"Title"} value={soloData?.title} onChange={handleChange} required />
                     <br />
                     <Input type={"date"} name={"end_date"} placeholder={"End Date"} value={soloData?.end_date} onChange={handleUpdateChange} />
                     <br />

@@ -2,7 +2,6 @@ const todoModel = require('../model/todoModel');
 
 exports.createTodo = async (req, res) => {
     try {
-        console.log(req.body);
         const newTodo = await new todoModel(req.body).save();
         res.json(newTodo);
     } catch (error) {
