@@ -10,6 +10,7 @@ const userRoute = require('./routes/userRoutes.js');
 const todoRoute = require('./routes/todoRoutes.js');
 const linkRoute = require('./routes/LinkRoutes.js');
 const pomorodoRoute = require('./routes/pomorodoRoutes.js');
+const notesRoute = require('./routes/notesRoutes.js');
 //dotenv config
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use('/user', userRoute);
 app.use('/todo', todoRoute);
 app.use('/link', linkRoute);
 app.use('/pomorodo', pomorodoRoute);
+app.use('/notes', notesRoute);
 //ports
 const port = process.env.PORT;
 

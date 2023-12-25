@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-
 //general pages
 import Home from './page/Home.js';
 import Error404 from './page/Error404.js';
@@ -16,6 +15,8 @@ import FriendList from './page/FriendList.js';
 import Leaderboard from './page/Leaderboard.js';
 import Profile from './auth/Profile.js';
 import LinkSaver from './page/LinkSaver.js';
+import Untitled from './page/Untitled.js';
+import IndividualNotes from './page/IndividualNotes.js';
 const ProtectedRoute = () => {
   useAuthCheck();
   return (
@@ -37,10 +38,12 @@ const App = () => {
           <Route path='todo' element={<Todo />} />
           <Route path='pomorodo' element={< Pomorodo />} />
           <Route path='notes' element={<Notes />} />
+          <Route path='notes/untitled=1' element={<Untitled />} />
           <Route path='friend/list' element={<FriendList />} />
           <Route path='link' element={<LinkSaver />} />
           <Route path='leaderboard' element={<Leaderboard />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='notes/page/:id' element={<IndividualNotes />} />
         </Route>
 
       </Routes>

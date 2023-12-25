@@ -8,7 +8,9 @@ import PomorodoContainer from '../pomorodo/PomorodoContainer';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import Modals from '../shared/Modals'
+import Modals from '../shared/Modals';
+import Input from '../shared/Input';
+import SubmitBtn from '../shared/button/SubmitBtn';
 const api = process.env.REACT_APP_API_URL;
 const Pomorodo = () => {
     const user = useContext(AuthContext);
@@ -22,8 +24,12 @@ const Pomorodo = () => {
     const [edit, setEdit] = useState({
         modal: false,
         max: 4,
-        minutes: 1,
+        minutes: 25,
     });
+    const [update, setUpdate] = useState({
+        max: '',
+        minutes: '',
+    })
     const [secondsLeft, setSecondsLeft] = useState(edit.minutes * 60);
     const [ternary, setTernary] = useState(false);
     const [intervalId, setIntervalId] = useState('');
@@ -97,6 +103,18 @@ const Pomorodo = () => {
 
     const minutesDisplay = Math.floor(secondsLeft / 60);
     const secondsDisplay = secondsLeft % 60;
+
+    useEffect(() => {
+        setSecondsLeft(edit.minutes * 60);
+    }, [edit.minutes]);
+    const handleSetting = (e) => {
+        e.preventDefault();
+        setEdit({
+            max: update.max,
+            minutes: update.minutes,
+        });
+    };
+
     return (
         <Layout>
             <h1 className='text-2xl font-semibold mb-4 text-red-600'>Pomorodo</h1>
@@ -105,7 +123,7 @@ const Pomorodo = () => {
                     <Container className='w-1/2 h-full flex flex-col items-center p-4'>
                         <div className='w-full flex justify-between'>
                             <p className='text-sm text-gray-400 italic'>{iteration}/{edit.max}</p>
-                            <p><FaCog className='text-gray-700 text-lg cursor-pointer' /></p>
+                            <button onClick={() => setEdit({ ...edit, modal: true })}><FaCog className='text-gray-700 text-lg ' /></button>
                         </div>
                         <p className='font-bold md:text-9xl text-5xl text-gray-700'>{`${minutesDisplay}:${secondsDisplay < 10 ? '0' : ''}${secondsDisplay}`}</p>
                         <br />
@@ -161,7 +179,28 @@ const Pomorodo = () => {
                 </div>
             </div>
             <Modals title={'Pomorodo Settings'} isOpen={edit.modal} onClose={(prev) => setEdit({ ...prev, modal: false })}>
+                <form onSubmit={handleSetting}>
+                    <Input
+                        type={'number'}
+                        value={update.max}
+                        placeholder={"Max Iteration"}
+                        onChange={(e) => {
+                            console.log('Updating max:', e.target.value);
+                            setUpdate({ ...update, max: e.target.value });
+                        }}
+                    />
+                    <Input
+                        type={'number'}
+                        value={update.minutes}
+                        placeholder={"Max Minutes per Iteration"}
+                        onChange={(e) => {
+                            console.log('Updating minutes:', e.target.value);
+                            setUpdate({ ...update, minutes: e.target.value });
+                        }}
+                    />
 
+                    <SubmitBtn type={"Submit"} >Update</SubmitBtn>
+                </form>
             </Modals>
         </Layout>
     );

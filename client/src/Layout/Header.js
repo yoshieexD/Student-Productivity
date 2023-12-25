@@ -22,7 +22,7 @@ const Header = () => {
         window.location.href = '/';
     }
     return (
-        <div className='bg-slate-50 w-full flex justify-between px-5 drop-shadow-sm pt-1 pb-2 sticky top-0 '>
+        <div className='bg-slate-50 w-full flex justify-between px-5 drop-shadow-sm pt-1 pb-2  '>
             <SearchBar placeholder={"Search a friend"} />
             <div className='flex space-x-3'>
                 <div className='bg-blue-600 p-2 rounded-full'><FaFacebookMessenger className="text-white text-2xl" /></div>

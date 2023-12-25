@@ -119,26 +119,13 @@ const LinkSaver = () => {
                             </div>
                             {getData?.filter(item => item.userId === user._id).map((e) => {
                                 return (
-                                    <LinkContainer
-                                        className='flex mb-2 pt-2'
-                                        linkName={e.title}
-                                        category={e.category}
-                                        description={e.description ? e.description.slice(0, 10) : ''}
-                                        key={e._id}
-                                    >
+                                    <LinkContainer className='flex mb-2 pt-2' linkName={e.title} category={e.category} description={e.description ? e.description.slice(0, 10) : ''} key={e._id}>
                                         <div className='flex justify-center space-x-2 w-1/4'>
                                             <div>
                                                 <FaCopy className='text-gray-600 cursor-pointer' onClick={() => handleClipBoard(e)} />
                                             </div>
                                             <div className='bg-red-500 p-1 rounded-full'>
-                                                <FaTimes
-                                                    className='text-white cursor-pointer text-xs'
-                                                    onClick={() => {
-                                                        setModal((prevModal) => ({ ...prevModal, delete: true }));
-                                                        setId(e._id);
-                                                    }}
-                                                />
-
+                                                <FaTimes className='text-white cursor-pointer text-xs' onClick={() => { setModal((prevModal) => ({ ...prevModal, delete: true })); setId(e._id); }} />
                                             </div>
                                         </div>
                                     </LinkContainer>
