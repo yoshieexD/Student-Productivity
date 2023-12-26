@@ -178,7 +178,7 @@ const Pomorodo = () => {
                     })}
                 </div>
             </div>
-            <Modals title={'Pomorodo Settings'} isOpen={edit.modal} onClose={(prev) => setEdit({ ...prev, modal: false })}>
+            <Modals title={'Pomorodo Settings'} isOpen={edit.modal} onClose={(prev) => setEdit({ ...prev, modal: false, minutes: update.minutes || 25, max: update.max || 4 })}>
                 <form onSubmit={handleSetting}>
                     <Input
                         type={'number'}

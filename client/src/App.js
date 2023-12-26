@@ -17,6 +17,7 @@ import Profile from './auth/Profile.js';
 import LinkSaver from './page/LinkSaver.js';
 import Untitled from './page/Untitled.js';
 import IndividualNotes from './page/IndividualNotes.js';
+import User from './page/User.js';
 const ProtectedRoute = () => {
   useAuthCheck();
   return (
@@ -44,6 +45,7 @@ const App = () => {
           <Route path='leaderboard' element={<Leaderboard />} />
           <Route path='profile' element={<Profile />} />
           <Route path='notes/page/:id' element={<IndividualNotes />} />
+          <Route path='user/:id' element={<User />} />
         </Route>
 
       </Routes>

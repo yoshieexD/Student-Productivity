@@ -4,9 +4,15 @@ import { AuthContext } from '../context/authStore';
 import { FaFacebookMessenger } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io"
+import { useMutation } from 'react-query';
 import Cookies from 'js-cookie';
 import SearchBar from '../shared/SearchBar';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+const api = process.env.REACT_APP_API_URL;
 const Header = () => {
+    const [userName, setUserName] = useState('');
+    const [friend, setFriend] = useState([]);
     const user = useContext(AuthContext);
     const [popover, setPopover] = useState(false);
     const navigate = useNavigate();
@@ -21,9 +27,23 @@ const Header = () => {
         Cookies.remove('id');
         window.location.href = '/';
     }
+    const get = useMutation(async () => {
+        const response = await axios.get(`${api}/user/find-user/${userName}`)
+        return setFriend(response.data);
+    }, {
+        onSuccess: () => {
+            console.log(friend._id)
+            navigate(`/auth/user/${friend._id}`)
+        }, onerror: () => {
+            toast.error('User doesnt not exist');
+        }
+    })
+    const handleFindUser = () => {
+        get.mutate();
+    }
     return (
         <div className='bg-slate-50 w-full flex justify-between px-5 drop-shadow-sm pt-1 pb-2  '>
-            <SearchBar placeholder={"Search a friend"} />
+            <SearchBar placeholder={"Search a friend"} onclick={handleFindUser} value={userName} name={'userName'} onchange={(e) => setUserName(e.target.value)} />
             <div className='flex space-x-3'>
                 <div className='bg-blue-600 p-2 rounded-full'><FaFacebookMessenger className="text-white text-2xl" /></div>
                 <div className='bg-blue-600 p-2 rounded-full'><IoNotifications className="text-white text-2xl" /></div>

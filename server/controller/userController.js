@@ -175,3 +175,79 @@ exports.getUser = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+exports.findUser = async (req, res) => {
+    try {
+        const user = await userModel.findOne({ userName: req.params.userName });
+        if (!user) {
+            return res.status(404).json({ error: 'This user does not exist' })
+        }
+        await res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+exports.findFriend = async (req, res) => {
+    try {
+        const user = await userModel.findOne({ userName: req.body.userName }).populate('friends');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json({ user, friends: user.friends });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+exports.listFriend = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user.friends);
+    } catch (error) {
+
+    }
+}
+exports.addFriend = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.userId);
+        const friend = await userModel.findById(req.params.friendId);
+
+        if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+        }
+        if (user.friends.includes(req.params.friendId)) {
+            return res.status(400).json({ message: 'Friend already added' });
+        }
+        user.friends.push(req.params.friendId);
+        await user.save();
+        res.status(200).json({ message: 'Friend added successfully', user: user });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+exports.unFriend = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.userId);
+        const friend = await userModel.findById(req.params.friendId);
+        if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+        }
+        const friendIndex = user.friends.indexOf(req.params.friendId);
+        if (friendIndex === -1) {
+            return res.status(400).json({ message: 'Friend not found in the user\'s friend list' });
+        }
+        user.friends.splice(friendIndex, 1);
+        await user.save();
+
+        res.status(200).json({ message: 'Friend removed successfully', user: user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
