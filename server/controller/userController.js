@@ -178,16 +178,17 @@ exports.getUser = async (req, res) => {
 
 exports.findUser = async (req, res) => {
     try {
-        const user = await userModel.findOne({ userName: req.params.userName });
+        const userName = req.query.userName;
+        console.log(userName);
+        const user = await userModel.findOne({ userName });
         if (!user) {
-            return res.status(404).json({ error: 'This user does not exist' })
+            return res.status(404).json({ error: 'This user does not exist' });
         }
-        await res.json(user);
+        res.json(user);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}
-
+};
 exports.findFriend = async (req, res) => {
     try {
         const user = await userModel.findOne({ userName: req.body.userName }).populate('friends');
@@ -203,11 +204,66 @@ exports.findFriend = async (req, res) => {
 }
 exports.listFriend = async (req, res) => {
     try {
-        const user = await userModel.findById(req.params.id);
+        const user = await userModel.findById(req.params.id).populate('friends');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
         res.json(user.friends);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+exports.listFriendreq = async (req, res) => {
+    try {
+        console.log('hello')
+        const user = await userModel.findById(req.params.id).populate('friendreq');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user.friendreq);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+exports.sendFriendreq = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.userId);
+        const friend = await userModel.findById(req.params.friendId);
+
+        if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+        }
+        if (friend.friendreq.includes(req.params.userId)) {
+            return res.status(400).json({ message: 'Already send Friend Request' });
+        }
+        if (friend.friends.includes(req.params.userId)) {
+            return res.status(400).json({ message: 'Friend already added' });
+        }
+        await friend.friendreq.push(req.params.userId);
+        await friend.save();
+        res.status(200).json({ message: 'Successfully send friend requesst successfully', user: user });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+
+    }
+}
+exports.unacceptFriendreq = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.userId);
+        const friend = await userModel.findById(req.params.friendId);
+        if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+        }
+        const friendIndex = user.friendreq.indexOf(req.params.friendId);
+        if (friendIndex === -1) {
+            return res.status(400).json({ message: 'Friend request not found in the user\'s friend request list' });
+        }
+        user.friendreq.splice(friendIndex, 1);
+        await user.save();
+
+        res.status(200).json({ message: 'Friend removed successfully', user: user });
     } catch (error) {
 
     }
@@ -223,8 +279,16 @@ exports.addFriend = async (req, res) => {
         if (user.friends.includes(req.params.friendId)) {
             return res.status(400).json({ message: 'Friend already added' });
         }
+        const friendIndex = user.friendreq.indexOf(req.params.friendId);
+        if (friendIndex === -1) {
+            return res.status(400).json({ message: 'Friend request not found in the user\'s friend request list' });
+        }
         user.friends.push(req.params.friendId);
+        user.friendreq.splice(friendIndex, 1);
+
+        friend.friends.push(req.params.userId);
         await user.save();
+        await friend.save();
         res.status(200).json({ message: 'Friend added successfully', user: user });
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -242,8 +306,14 @@ exports.unFriend = async (req, res) => {
         if (friendIndex === -1) {
             return res.status(400).json({ message: 'Friend not found in the user\'s friend list' });
         }
+        const userIndex = friend.friends.indexOf(req.params.userId);
+        if (userIndex === -1) {
+            return res.status(400).json({ message: 'user not found in the friend\'s friend list' });
+        }
         user.friends.splice(friendIndex, 1);
+        friend.friends.splice(userIndex, 1);
         await user.save();
+        await friend.save();
 
         res.status(200).json({ message: 'Friend removed successfully', user: user });
     } catch (error) {
@@ -251,3 +321,21 @@ exports.unFriend = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+exports.checkFriend = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.params.userId);
+        const friend = await userModel.findById(req.params.friendId);
+        if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+        }
+        if (user.friends.includes(req.params.friendId)) {
+            res.status(200).json(true);
+        } else {
+            res.status(200).json(false);
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+
+    }
+}

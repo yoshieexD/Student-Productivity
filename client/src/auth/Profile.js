@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../context/authStore';
 import Layout from '../Layout/Layout';
 import Container from '../shared/Container';
+import FriendList from '../page/FriendList';
 const Profile = () => {
     const user = useContext(AuthContext);
     return (
@@ -18,6 +19,7 @@ const Profile = () => {
                 {/* Friends and Hobbies */}
                 <div className='w-2/3 h-1/4 flex space-x-2'>
                     <Container className='w-1/2 h-full'>
+                        <FriendList />
                     </Container>
                     <Container className='w-1/2 h-full'>
                     </Container>

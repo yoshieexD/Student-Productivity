@@ -155,19 +155,38 @@ const Todo = () => {
         }
 
     };
+    const move = useMutation(
+        async (type) => {
+            const response = await axios.put(`${api}/todo/update-todo/${soloData._id}`, { ...soloData, type: type });
+            return response.data;
+        }, {
+        onSuccess: async () => {
+            setRight({ update: false, delete: false, view: false, })
+            await queryClient.invalidateQueries('get-todo');
+        },
+        onError: (error) => {
+            toast.error(error.response.data.message);
+        }
+    })
+
+    const handleMove = (event, type) => {
+        event.preventDefault();
+        move.mutate(type);
+    }
 
     return (
         <Layout>
             <div>
                 <h1 className="text-2xl font-semibold  text-green-600">Todo Board</h1>
-                <p className='italic text-base mb-4 text-gray-700'>Note: If you want to view, update, or delete, simply hover and right-click.</p>
+                <p className='italic text-base mb-4 text-gray-700'>Note: If you want to move, view, update, or delete, simply hover and right-click.</p>
                 <div className='flex justify-around '>
                     <div className='flex flex-col w-3/12'>
                         {getData?.filter(item => item.type === "Todo" && item.userId === user._id).map((e, index, array) => (
                             <>
                                 <TodoContainer key={e._id} onContextMenu={(event) => handleContextMenu(event, e)} title={index === 0 ? 'Todo' : ''} icon={index === 0 && <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />}>
                                     {index !== 0 && <div className='my-2'></div>}
-                                    <TodoCard title={e.title} description={e.description} key={e._id} />
+
+                                    <TodoCard title={e.title} description={e.description} key={e._id} date={e.end_date} />
                                     <div className='flex justify-start w-full ml-5 mt-2 mb-2'>
                                         {(index === array.length - 1) && <AddCard onclick={() => setModal(prevModal => ({ ...prevModal, todo: true }))}> Add a card...</AddCard>}
                                     </div>
@@ -195,8 +214,7 @@ const Todo = () => {
                             <>
                                 <TodoContainer key={e._id} onContextMenu={(event) => handleContextMenu(event, e)} title={index === 0 ? 'Doing' : ''} icon={index === 0 && <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />}>
                                     {index !== 0 && <div className='my-2'></div>}
-                                    <TodoCard title={e.title} description={e.description} key={e._id} />
-                                    <div className='flex justify-start w-full ml-5 mt-2 mb-2'>
+                                    <TodoCard title={e.title} description={e.description} key={e._id} date={e.end_date} />                                    <div className='flex justify-start w-full ml-5 mt-2 mb-2'>
                                         {(index === array.length - 1) && <AddCard onclick={() => setModal(prevModal => ({ ...prevModal, doing: true }))}> Add a card...</AddCard>}
                                     </div>
                                 </TodoContainer>
@@ -220,8 +238,7 @@ const Todo = () => {
                             <>
                                 <TodoContainer key={e._id} onContextMenu={(event) => handleContextMenu(event, e)} title={index === 0 ? 'Done' : ''} icon={index === 0 && <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />}>
                                     {index !== 0 && <div className='my-2'></div>}
-                                    <TodoCard title={e.title} description={e.description} key={e._id} />
-                                    <div className='flex justify-start w-full ml-5 mt-2 mb-2'>
+                                    <TodoCard title={e.title} description={e.description} key={e._id} date={e.end_date} />                                    <div className='flex justify-start w-full ml-5 mt-2 mb-2'>
                                         {(index === array.length - 1) && <AddCard onclick={() => setModal(prevModal => ({ ...prevModal, done: true }))}> Add a card...</AddCard>}
                                     </div>
                                 </TodoContainer>
@@ -289,7 +306,7 @@ const Todo = () => {
             </Modals>
             <Modals title={'Update'} isOpen={Modal.update} onClose={() => setModal((prev) => ({ ...prev, update: false }))} >
                 <form onSubmit={handleUpdate}>
-                    <Input type={"text"} name={"title"} placeholder={"Title"} value={soloData?.title} onChange={handleChange} required />
+                    <Input type={"text"} name={"title"} placeholder={"Title"} value={soloData?.title} onChange={handleUpdateChange} required />
                     <br />
                     <Input type={"date"} name={"end_date"} placeholder={"End Date"} value={soloData?.end_date} onChange={handleUpdateChange} />
                     <br />
@@ -314,6 +331,24 @@ const Todo = () => {
             {right.update && (
                 <div className="absolute bg-white border border-gray-300 p-2 z-10"
                     style={{ top: right.contextMenuPosition.top, left: right.contextMenuPosition.left }}>
+                    {soloData.type === "Todo" && (
+                        <>
+                            <div className='cursor-pointer hover:bg-gray-100 py-1 px-2' onClick={(event) => handleMove(event, 'Doing')}>Move to Doing</div>
+                            <div className='cursor-pointer hover:bg-gray-100 py-1 px-2' onClick={(event) => handleMove(event, 'Done')}>Move to Done</div>
+                        </>
+                    )}
+                    {soloData.type === "Doing" && (
+                        <>
+                            <div className='cursor-pointer hover:bg-gray-100 py-1 px-2' onClick={(event) => handleMove(event, 'Todo')}>Back to Todo</div>
+                            <div className='cursor-pointer hover:bg-gray-100 py-1 px-2' onClick={(event) => handleMove(event, 'Done')}>Move to Done</div>
+                        </>
+                    )}
+                    {soloData.type === "Done" && (
+                        <>
+                            <div className='cursor-pointer hover:bg-gray-100 py-1 px-2' onClick={(event) => handleMove(event, 'Todo')}>Back to Todo</div>
+                            <div className='cursor-pointer hover:bg-gray-100 py-1 px-2' onClick={(event) => handleMove(event, 'Doing')}>Back to Doing</div>
+                        </>
+                    )}
                     <div className="cursor-pointer hover:bg-gray-100 py-1 px-2" onClick={() => { setModal(prevModal => ({ ...prevModal, view: true })); setRight({ update: false, delete: false, view: false, }) }}>View</div>
                     <div className="cursor-pointer hover:bg-gray-100 py-1 px-2" onClick={() => { setModal(prevModal => ({ ...prevModal, update: true })); setRight({ update: false, delete: false, view: false, }) }}>Update</div>
                     <div className="cursor-pointer hover:bg-gray-100 py-1 px-2" onClick={() => { setModal(prevModal => ({ ...prevModal, delete: true })); setRight({ update: false, delete: false, view: false }) }}>Delete</div>

@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel'
+    }],
+    friendreq: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'
     }]
 })
 const userModel = mongoose.model('userModel', userSchema)
