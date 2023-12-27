@@ -18,6 +18,7 @@ import LinkSaver from './page/LinkSaver.js';
 import Untitled from './page/Untitled.js';
 import IndividualNotes from './page/IndividualNotes.js';
 import User from './page/User.js';
+import Chat from './page/Chat.js';
 const ProtectedRoute = () => {
   useAuthCheck();
   return (
@@ -46,6 +47,8 @@ const App = () => {
           <Route path='profile' element={<Profile />} />
           <Route path='notes/page/:id' element={<IndividualNotes />} />
           <Route path='user/:id' element={<User />} />
+          <Route path='chat/:userId' element={<Chat />} />
+          <Route path='chat/:userId/:friendId' element={<Chat />} />
         </Route>
 
       </Routes>

@@ -11,6 +11,7 @@ const todoRoute = require('./routes/todoRoutes.js');
 const linkRoute = require('./routes/LinkRoutes.js');
 const pomorodoRoute = require('./routes/pomorodoRoutes.js');
 const notesRoute = require('./routes/notesRoutes.js');
+const chatRoute = require('./routes/chatRoutes.js');
 //dotenv config
 dotenv.config();
 
@@ -18,7 +19,7 @@ dotenv.config();
 connectDB();
 
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: [process.env.ORIGIN],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -31,6 +32,7 @@ app.use('/todo', todoRoute);
 app.use('/link', linkRoute);
 app.use('/pomorodo', pomorodoRoute);
 app.use('/notes', notesRoute);
+app.use('/chat', chatRoute);
 //ports
 const port = process.env.PORT;
 
