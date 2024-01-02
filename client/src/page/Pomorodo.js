@@ -118,9 +118,9 @@ const Pomorodo = () => {
     return (
         <Layout>
             <h1 className='text-2xl font-semibold mb-4 text-red-600'>Pomorodo</h1>
-            <div className='flex flex-col items-center h-screen'>
-                <div className='w-4/5 h-2/5 flex space-x-5'>
-                    <Container className='w-1/2 h-full flex flex-col items-center p-4'>
+            <div className='flex flex-col items-center h-screen '>
+                <div className='w-4/5 h-2/5 flex md:flex-row md:space-x-5 sm:flex-col sm:space-y-2 xs:flex-col xs:space-y-2 xxs:space-y-2 xxs:flex-col '>
+                    <Container className='md:w-1/2 sm:w-full xs:w-full xxs:w-full h-full flex flex-col items-center p-4'>
                         <div className='w-full flex justify-between'>
                             <p className='text-sm text-gray-400 italic'>{iteration}/{edit.max}</p>
                             <button onClick={() => setEdit({ ...edit, modal: true })}><FaCog className='text-gray-700 text-lg ' /></button>
@@ -132,7 +132,7 @@ const Pomorodo = () => {
 
                         </div>
                     </Container>
-                    <Container className='w-1/2 h-full p-10'>
+                    <Container className='md:w-1/2 h-full p-10 sm:w-full xs:w-full xxs:w-full'>
                         <div className='space-x-4 flex justify-center'>
                             <div className='flex flex-col items-center'>
                                 <GiLaurelsTrophy className='text-5xl text-[#ffd700] ml-2' />
@@ -164,6 +164,13 @@ const Pomorodo = () => {
                     </Container>
                 </div>
                 <br />
+                <br />
+                <br className='md:hidden sm:block xs:block xxs:block' />
+                <br className='md:hidden sm:block xs:block xxs:block' />
+                <br className='md:hidden sm:block xs:block xxs:block' />
+                <br className='md:hidden sm:block xs:block xxs:block' />
+                <br className='md:hidden sm:hidden xs:hidden xxs:block' />
+                <br className='md:hidden sm:hidden xs:hidden xxs:block' />
                 <div className='w-4/5 flex flex-col space-x-5 space-y-2  '>
                     <div className='ml-4 italic font-semibold'>History</div>
                     <div className='w-full'>
@@ -177,7 +184,7 @@ const Pomorodo = () => {
                         return <PomorodoContainer date={dayjs(e.date).format('MMMM DD YYYY')} Minutes={`${e.minutes} Minutes`} Points={e.points} className={"w-full"} />
                     })}
                 </div>
-            </div>
+            </div >
             <Modals title={'Pomorodo Settings'} isOpen={edit.modal} onClose={(prev) => setEdit({ ...prev, modal: false, minutes: update.minutes || 25, max: update.max || 4 })}>
                 <form onSubmit={handleSetting}>
                     <Input
@@ -202,7 +209,7 @@ const Pomorodo = () => {
                     <SubmitBtn type={"Submit"} >Update</SubmitBtn>
                 </form>
             </Modals>
-        </Layout>
+        </Layout >
     );
 };
 

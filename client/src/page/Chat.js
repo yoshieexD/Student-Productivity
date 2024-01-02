@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, } from 'react-router-dom';
 import { FaLocationArrow } from "react-icons/fa";
 import Input from '../shared/Input'
 import Layout from '../Layout/Layout';
@@ -13,6 +13,7 @@ const Chat = () => {
     const [datas, setDatas] = useState({
         content: ''
     });
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -36,7 +37,7 @@ const Chat = () => {
         })
 
 
-    const { data: user } = useQuery('get-user', async () => {
+    const { data: user } = useQuery(['get-user', userId, friendId], async () => {
         if (friendId !== undefined) {
             const response = await axios.get(`${api}/chat/get-user/${userId}/${friendId}`);
             return response.data;
@@ -44,16 +45,14 @@ const Chat = () => {
         return null;
     });
 
-    const { data } = useQuery('get-chat', async () => {
+    const { data } = useQuery(['get-chat', userId, friendId], async () => {
         const response = await axios.get(`${api}/chat/get-chat/${userId}/${friendId}`);
         return response.data
     })
 
-    useEffect(() => {
-        console.log('chat', data);
-    }, [data])
     const handleReload = async () => {
         try {
+            console.log('hello')
             await queryClient.invalidateQueries('get-user');
         } catch (error) {
             console.error("Error invalidating 'get-user' query:", error);

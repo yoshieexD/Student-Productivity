@@ -179,8 +179,8 @@ const Todo = () => {
             <div>
                 <h1 className="text-2xl font-semibold  text-green-600">Todo Board</h1>
                 <p className='italic text-base mb-4 text-gray-700'>Note: If you want to move, view, update, or delete, simply hover and right-click.</p>
-                <div className='flex justify-around '>
-                    <div className='flex flex-col w-3/12'>
+                <div className='grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-2 xxs:grid-cols-1'>
+                    <div className='flex flex-col w-5/6'>
                         {getData?.filter(item => item.type === "Todo" && item.userId === user._id).map((e, index, array) => (
                             <>
                                 <TodoContainer key={e._id} onContextMenu={(event) => handleContextMenu(event, e)} title={index === 0 ? 'Todo' : ''} icon={index === 0 && <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />}>
@@ -204,12 +204,13 @@ const Todo = () => {
                                         </AddCard>
                                     </div>
                                 </TodoContainer>
+                                <br />
 
                             </>
                         )}
                     </div>
 
-                    <div className='flex flex-col w-3/12'>
+                    <div className='flex flex-col w-5/6'>
                         {getData?.filter(item => item.type === "Doing" && item.userId === user._id).map((e, index, array) => (
                             <>
                                 <TodoContainer key={e._id} onContextMenu={(event) => handleContextMenu(event, e)} title={index === 0 ? 'Doing' : ''} icon={index === 0 && <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />}>
@@ -229,11 +230,11 @@ const Todo = () => {
                                         <AddCard onclick={() => setModal(prevModal => ({ ...prevModal, doing: true }))}> Add a card...</AddCard>
                                     </div>
                                 </TodoContainer>
+                                <br />
                             </>
                         )}
                     </div>
-
-                    <div className='flex flex-col w-3/12'>
+                    <div className='flex flex-col w-5/6'>
                         {getData?.filter(item => item.type === "Done" && item.userId === user._id).map((e, index, array) => (
                             <>
                                 <TodoContainer key={e._id} onContextMenu={(event) => handleContextMenu(event, e)} title={index === 0 ? 'Done' : ''} icon={index === 0 && <FaEllipsisH className='text-gray-400 text-xs cursor-pointer' />}>
@@ -253,6 +254,7 @@ const Todo = () => {
                                         <AddCard onclick={() => setModal(prevModal => ({ ...prevModal, done: true }))}> Add a card...</AddCard>
                                     </div>
                                 </TodoContainer>
+                                <br />
                             </>
                         )}
 

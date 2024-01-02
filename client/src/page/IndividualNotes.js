@@ -4,7 +4,7 @@ import Layout from '../Layout/Layout';
 import Input from '../shared/Input';
 import TextArea from '../shared/TextArea';
 import SubmitBtn from '../shared/button/SubmitBtn';
-import { useQuery, useMutation } from 'react-query';
+import { useMutation } from 'react-query';
 import { toast } from 'react-toastify'
 import axios from 'axios';
 const api = process.env.REACT_APP_API_URL;
@@ -12,10 +12,6 @@ const IndividualNotes = () => {
     const navigate = useNavigate();
     const [update, setUpdate] = useState([]);
     const { id } = useParams();
-    const { data } = useQuery('get-notes', async () => {
-        const response = await axios.get(`${api}/notes/get-notes/${id}`)
-        return setUpdate(response.data);
-    })
     const handleChange = (event) => {
         const { name, value } = event.target;
         setUpdate((prevData) => ({
