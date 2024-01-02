@@ -38,9 +38,10 @@ exports.getChat = async (req, res) => {
         }
 
         const chat = await chatModel.find({
-            users: {
-                $elemMatch: { sender: sender._id, receiver: receiver._id }
-            }
+            $or: [
+                { users: { $elemMatch: { sender: sender._id, receiver: receiver._id } } },
+                { users: { $elemMatch: { sender: receiver._id, receiver: sender._id } } }
+            ]
         });
 
         res.json(chat);
@@ -48,6 +49,7 @@ exports.getChat = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 exports.getUser = async (req, res) => {
     try {
