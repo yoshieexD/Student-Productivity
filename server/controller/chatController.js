@@ -37,7 +37,7 @@ exports.getChat = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        const chat = await chatModel.findOne({
+        const chat = await chatModel.find({
             users: {
                 $elemMatch: { sender: sender._id, receiver: receiver._id }
             }

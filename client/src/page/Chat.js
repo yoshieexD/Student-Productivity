@@ -80,16 +80,19 @@ const Chat = () => {
                     </div>
 
                     {/* chat body*/}
-                    <div className=' h-2/3 px-4'>
+                    <div className='h-2/3 px-4 overflow-y-auto'>
                         <div className="flex flex-col space-y-2">
-                            {data?.messages.map((message) => (
-                                <div key={message._id} className={`max-w-2/3 p-3 rounded-lg ${message.sender === userId ? 'bg-green-500 text-white self-end' : 'bg-gray-200 text-gray-800 self-start'}`}>
-                                    <p>{message.content}</p>
+                            {data?.map((conversation) => (
+                                <div key={conversation._id} className="flex flex-col">
+                                    {conversation.messages.map((message) => (
+                                        <div key={message._id} className={`max-w-2/3 p-3 rounded-lg ${message.sender === userId ? 'bg-green-500 text-white self-end' : 'bg-gray-200 text-gray-800 self-start'}`}>
+                                            <p>{message.content}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             ))}
                         </div>
                     </div>
-
                     {/* chat textfield */}
                     <div className='h-1/6 px-4 flex items-center w-full '>
                         <div className=' w-full flex justify-center space-x-4   '>
