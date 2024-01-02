@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 const chatSchema = new mongoose.Schema({
     users: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userModel',
-        required: true,
+        sender: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'userModel',
+        },
+        receiver: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'userModel',
+        }
     }],
     messages: [{
         sender: {

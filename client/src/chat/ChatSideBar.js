@@ -15,7 +15,7 @@ const ChatSideBar = () => {
         return response.data;
     });
     const showChat = (friend) => {
-        return navigate(`/auth/chat/${user._id}?name=${user.userName}/${friend._id}?name=${friend.userName}`);
+        return navigate(`/auth/chat/${user._id}/${friend._id}`);
     }
     return (
         <div className="p-4 bg-gray-200 h-full">

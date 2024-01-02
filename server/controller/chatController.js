@@ -9,7 +9,12 @@ exports.createChat = async (req, res) => {
             return res.status(404).json({ message: 'receiver or sender not found' });
         }
         const newChat = new chatModel({
-            users: [req.params.userId, req.params.friendId],
+            users: [
+                {
+                    sender: req.params.userId,
+                    receiver: req.params.friendId
+                }
+            ],
             messages: [{
                 sender: req.params.userId,
                 content: req.body.content
@@ -27,16 +32,28 @@ exports.getChat = async (req, res) => {
     try {
         const sender = await userModel.findById(req.params.userId);
         const receiver = await userModel.findById(req.params.friendId);
+
         if (!sender || !receiver) {
             return res.status(404).json({ error: 'User not found' });
         }
+
         const chat = await chatModel.findOne({
             users: {
-                $all: [sender._id, receiver._id]
+                $elemMatch: { sender: sender._id, receiver: receiver._id }
             }
         });
 
         res.json(chat);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.getUser = async (req, res) => {
+    try {
+        const sender = await userModel.findOne({ _id: req.params.userId });
+        const receiver = await userModel.findOne({ _id: req.params.friendId });
+        res.json({ sender, receiver })
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
