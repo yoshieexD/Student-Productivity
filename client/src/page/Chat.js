@@ -72,10 +72,13 @@ const Chat = () => {
                 <div className='w-4/5'>
                     {/* Chat header */}
                     <div className=' px-4 flex items-center space-x-1 h-1/6'>
-                        <div className='h-10 w-10 p-1'>
-                            <img src={user?.receiver?.avatar} alt="friend" className='rounded-full ' />
-                        </div>
-                        <p className='text-xl font-medium'>{user?.receiver?.userName}</p>
+                        {user &&
+                            <>
+                                <div className='h-10 w-10 p-1'>
+                                    <img src={user?.receiver?.avatar} alt="friend" className='rounded-full ' />
+                                </div>
+                                <p className='text-xl font-medium'>{user?.receiver?.userName}</p>
+                            </>}
                     </div>
 
                     {/* chat body*/}
