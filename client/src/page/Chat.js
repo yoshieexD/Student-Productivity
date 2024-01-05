@@ -29,10 +29,10 @@ const Chat = () => {
     },
         {
             onSuccess: async () => {
+                await queryClient.invalidateQueries('get-chat');
                 setDatas({
                     content: ''
                 })
-                await queryClient.invalidateQueries('get-chat');
             }
         })
 
